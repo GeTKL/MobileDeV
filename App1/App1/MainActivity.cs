@@ -7,6 +7,7 @@ using System.Collections;
 using System.Data.SqlClient;
 using System;
 using System.Data;
+using Android.Content.Res;
 
 namespace App1
 {
@@ -26,11 +27,11 @@ namespace App1
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.activity_main);
-
             lstNotes = FindViewById<EditText>(Resource.Id.editText1);
             txtNote = FindViewById<EditText>(Resource.Id.editText2);
             Button btnSubmit = FindViewById<Button>(Resource.Id.button1);
             btnSubmit.Click += BtnSubmit_Click;
+            btnSubmit.Click += delegate { StartActivity(typeof(SeecondActivity)); };
         }
 
         private void Conn()
@@ -56,6 +57,7 @@ namespace App1
             if (lstNotes.Text == "Admin" && txtNote.Text == "Admin")
             {
                 Toast.MakeText(this, string.Format("Успешный вход"), ToastLength.Short).Show();
+                SetContentView(Resource.Layout.second_page);
             }
             else
             {

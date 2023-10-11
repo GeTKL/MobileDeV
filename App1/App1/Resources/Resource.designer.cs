@@ -11503,16 +11503,19 @@ namespace App1
 			public const int notification_template_part_time = 2131427433;
 			
 			// aapt resource value: 0x7F0B006A
-			public const int select_dialog_item_material = 2131427434;
+			public const int second_page = 2131427434;
 			
 			// aapt resource value: 0x7F0B006B
-			public const int select_dialog_multichoice_material = 2131427435;
+			public const int select_dialog_item_material = 2131427435;
 			
 			// aapt resource value: 0x7F0B006C
-			public const int select_dialog_singlechoice_material = 2131427436;
+			public const int select_dialog_multichoice_material = 2131427436;
 			
 			// aapt resource value: 0x7F0B006D
-			public const int support_simple_spinner_dropdown_item = 2131427437;
+			public const int select_dialog_singlechoice_material = 2131427437;
+			
+			// aapt resource value: 0x7F0B006E
+			public const int support_simple_spinner_dropdown_item = 2131427438;
 			
 			static Layout()
 			{
