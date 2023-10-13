@@ -11,14 +11,15 @@ using Android.Content.Res;
 
 namespace App1
 {
-    [Activity(Label = "SeecondActivity")]
-    public class SeecondActivity : AppCompatActivity
+    [Activity(Label = "third_page")]
+    public class third_page : AppCompatActivity
     {
+        Button sbmButton;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             // Create your application here
-            SetContentView(Resource.Layout.second_page);
+            SetContentView(Resource.Layout.third_page);
             Button sbmButton = FindViewById<Button>(Resource.Id.button1);
             sbmButton.Click += SbmButton_Click;
         }
