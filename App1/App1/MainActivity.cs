@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System;
 using System.Data;
 using Android.Content.Res;
+using Android.Content;
 
 namespace App1
 {
@@ -18,6 +19,8 @@ namespace App1
         EditText txtNote;
         DataTable dt = new DataTable();
         Button btnSubmit;
+        int result;
+        Intent i;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -39,6 +42,19 @@ namespace App1
             cmd.Parameters.AddWithValue("@pas", txtNote.Text);
             SqlDataAdapter sdr = new SqlDataAdapter(cmd);
             sdr.Fill(dt);
+            conn.Close();
+        }
+
+        private void Roles()
+        {
+            SqlConnection conn = new SqlConnection("workstation id=WorldSkills.mssql.somee.com;packet size=4096;user id=GeT_SQLLogin_1;pwd=fgzhl41chb;data source=WorldSkills.mssql.somee.com;persist security info=False;initial catalog=WorldSkills");
+            conn.Open();
+
+            SqlCommand cmd = new SqlCommand("Select Id From Auth where Us_log = @log", conn);
+            cmd.Parameters.AddWithValue("@log", lstNotes.Text);
+            
+            result = (int)cmd.ExecuteScalar();
+            conn.Close();
         }
 
         private void BtnSubmit_Click(object sender, EventArgs e)
@@ -46,8 +62,13 @@ namespace App1
             DB();
             if (dt.Rows.Count > 0)
             {
+                Roles();
+
+                i = new Intent(this, typeof(SeecondActivity));
+                i.PutExtra("res", result);
+
                 Toast.MakeText(this, string.Format("Успешный вход"), ToastLength.Short).Show();
-                StartActivity(typeof(SeecondActivity));
+                StartActivity(i);
             }
             else
             {
