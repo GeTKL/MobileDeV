@@ -17,7 +17,6 @@ namespace App1
         EditText lstNotes;
         EditText txtNote;
         DataTable dt = new DataTable();
-        SqlConnection conn;
         Button btnSubmit;
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -31,16 +30,11 @@ namespace App1
             btnSubmit.Click += BtnSubmit_Click;
         }
 
-        private void Conn()
-        {
-            SqlConnection conn = new SqlConnection("Server=tcp:DESKTOP-GT0DBLK; DataBase = WS; Trusted_Connection = true;");
-            conn.Open();    
-        }
-
         private void DB()
         {
-            Conn();
-            SqlCommand cmd = new SqlCommand("Select * FROM ENTER WHERE Столица = @log and Округ = @pas", conn);
+            SqlConnection conn = new SqlConnection("workstation id=WorldSkills.mssql.somee.com;packet size=4096;user id=GeT_SQLLogin_1;pwd=fgzhl41chb;data source=WorldSkills.mssql.somee.com;persist security info=False;initial catalog=WorldSkills");
+            conn.Open();
+            SqlCommand cmd = new SqlCommand("Select * FROM Auth WHERE Us_log = @log and Pass = @pas", conn);
             cmd.Parameters.AddWithValue("@log", lstNotes.Text);
             cmd.Parameters.AddWithValue("@pas", txtNote.Text);
             SqlDataAdapter sdr = new SqlDataAdapter(cmd);
@@ -49,24 +43,15 @@ namespace App1
 
         private void BtnSubmit_Click(object sender, EventArgs e)
         {
-            //DB();
-            //if (dt.Rows.Count > 0)
-            if (lstNotes.Text == "Admin" && txtNote.Text == "Admin")
+            DB();
+            if (dt.Rows.Count > 0)
             {
                 Toast.MakeText(this, string.Format("Успешный вход"), ToastLength.Short).Show();
                 StartActivity(typeof(SeecondActivity));
             }
             else
             {
-                if (lstNotes.Text == "Guest" && txtNote.Text == "Guest")
-                {
-                    Toast.MakeText(this, string.Format("Успешный вход"), ToastLength.Short).Show();
-                    StartActivity(typeof(third_page));
-                }
-                else
-                {
-                    Toast.MakeText(this, string.Format("Ошибка входа"), ToastLength.Short).Show();
-                }
+                Toast.MakeText(this, string.Format("Ошибка входа"), ToastLength.Short).Show();
             }
         }
 
