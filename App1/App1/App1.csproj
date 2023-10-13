@@ -66,6 +66,7 @@
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SeecondActivity.cs" />
+    <Compile Include="third_page.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -114,6 +115,11 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\layout\second_page.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\third_page.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>

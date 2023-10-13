@@ -11523,6 +11523,9 @@ namespace App1
 			// aapt resource value: 0x7F0B006E
 			public const int support_simple_spinner_dropdown_item = 2131427438;
 			
+			// aapt resource value: 0x7F0B006F
+			public const int third_page = 2131427439;
+			
 			static Layout()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();

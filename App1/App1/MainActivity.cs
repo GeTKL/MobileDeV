@@ -14,13 +14,11 @@ namespace App1
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true)]
     public class MainActivity : AppCompatActivity
     {
-        ArrayList notes = new ArrayList();
         EditText lstNotes;
         EditText txtNote;
-        SqlCommand cmd;
         DataTable dt = new DataTable();
-        SqlDataAdapter sdr;
         SqlConnection conn;
+        Button btnSubmit;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -29,9 +27,8 @@ namespace App1
             SetContentView(Resource.Layout.activity_main);
             lstNotes = FindViewById<EditText>(Resource.Id.editText1);
             txtNote = FindViewById<EditText>(Resource.Id.editText2);
-            Button btnSubmit = FindViewById<Button>(Resource.Id.button1);
+            btnSubmit = FindViewById<Button>(Resource.Id.button1);
             btnSubmit.Click += BtnSubmit_Click;
-            btnSubmit.Click += delegate { StartActivity(typeof(SeecondActivity)); };
         }
 
         private void Conn()
@@ -57,11 +54,19 @@ namespace App1
             if (lstNotes.Text == "Admin" && txtNote.Text == "Admin")
             {
                 Toast.MakeText(this, string.Format("Успешный вход"), ToastLength.Short).Show();
-                SetContentView(Resource.Layout.second_page);
+                StartActivity(typeof(SeecondActivity));
             }
             else
             {
-                Toast.MakeText(this, string.Format("Ошибка входа"), ToastLength.Short).Show();
+                if (lstNotes.Text == "Guest" && txtNote.Text == "Guest")
+                {
+                    Toast.MakeText(this, string.Format("Успешный вход"), ToastLength.Short).Show();
+                    StartActivity(typeof(third_page));
+                }
+                else
+                {
+                    Toast.MakeText(this, string.Format("Ошибка входа"), ToastLength.Short).Show();
+                }
             }
         }
 
