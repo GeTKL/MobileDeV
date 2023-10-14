@@ -24,7 +24,7 @@
     <EditText
         android:layout_marginLeft="50px"
         android:layout_marginRight="50px"
-        android:inputType="text"
+        android:inputType="textMultiLine"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editText1" />
