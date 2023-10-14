@@ -7,55 +7,68 @@ using System.Collections;
 using System.Data.SqlClient;
 using System;
 using System.Data;
+using Android.Content.Res;
+using Android.Content;
 
 namespace App1
 {
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true)]
     public class MainActivity : AppCompatActivity
     {
-        ArrayList notes = new ArrayList();
         EditText lstNotes;
         EditText txtNote;
-        SqlCommand cmd;
         DataTable dt = new DataTable();
-        SqlDataAdapter sdr;
-        SqlConnection conn;
+        Button btnSubmit;
+        int result;
+        Intent i;
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.activity_main);
-
             lstNotes = FindViewById<EditText>(Resource.Id.editText1);
             txtNote = FindViewById<EditText>(Resource.Id.editText2);
-            Button btnSubmit = FindViewById<Button>(Resource.Id.button1);
+            btnSubmit = FindViewById<Button>(Resource.Id.button1);
             btnSubmit.Click += BtnSubmit_Click;
-        }
-
-        private void Conn()
-        {
-            SqlConnection conn = new SqlConnection("Server=tcp:DESKTOP-GT0DBLK; DataBase = WS; Trusted_Connection = true;");
-            conn.Open();    
         }
 
         private void DB()
         {
-            Conn();
-            SqlCommand cmd = new SqlCommand("Select * FROM ENTER WHERE Столица = @log and Округ = @pas", conn);
+            SqlConnection conn = new SqlConnection("workstation id=WorldSkills.mssql.somee.com;packet size=4096;user id=GeT_SQLLogin_1;pwd=fgzhl41chb;data source=WorldSkills.mssql.somee.com;persist security info=False;initial catalog=WorldSkills");
+            conn.Open();
+            SqlCommand cmd = new SqlCommand("Select * FROM Auth WHERE Us_log = @log and Pass = @pas", conn);
             cmd.Parameters.AddWithValue("@log", lstNotes.Text);
             cmd.Parameters.AddWithValue("@pas", txtNote.Text);
             SqlDataAdapter sdr = new SqlDataAdapter(cmd);
             sdr.Fill(dt);
+            conn.Close();
+        }
+
+        private void Roles()
+        {
+            SqlConnection conn = new SqlConnection("workstation id=WorldSkills.mssql.somee.com;packet size=4096;user id=GeT_SQLLogin_1;pwd=fgzhl41chb;data source=WorldSkills.mssql.somee.com;persist security info=False;initial catalog=WorldSkills");
+            conn.Open();
+
+            SqlCommand cmd = new SqlCommand("Select Id From Auth where Us_log = @log", conn);
+            cmd.Parameters.AddWithValue("@log", lstNotes.Text);
+            
+            result = (int)cmd.ExecuteScalar();
+            conn.Close();
         }
 
         private void BtnSubmit_Click(object sender, EventArgs e)
         {
-            //DB();
-            //if (dt.Rows.Count > 0)
-            if (lstNotes.Text == "Admin" && txtNote.Text == "Admin")
+            DB();
+            if (dt.Rows.Count > 0)
             {
+                Roles();
+
+                i = new Intent(this, typeof(SeecondActivity));
+                i.PutExtra("res", result);
+
                 Toast.MakeText(this, string.Format("Успешный вход"), ToastLength.Short).Show();
+                StartActivity(i);
             }
             else
             {
